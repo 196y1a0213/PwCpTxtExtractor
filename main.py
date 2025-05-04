@@ -83,12 +83,14 @@ async def fetch_pwwp_data(session: aiohttp.ClientSession, url: str, headers: Dic
     max_retries = 3
     for attempt in range(max_retries):
         try:
-            if session is not None:
-                async with session.request(method=method, url=url, headers=headers, params=params, json=data) as response:
-                    if response.status == 404:
-                        return None
-                    response.raise_for_status()
-                    return await response.json()
+            response = await session.request(method=method, url=url, headers=headers, params=params, json=data)
+            try:
+                if response.status == 404:
+                    return None
+                response.raise_for_status()
+                return await response.json()
+            finally:
+                response.close()
         except aiohttp.ClientError as e:
             logging.error(f"Attempt {attempt + 1} failed: aiohttp error fetching {url}: {e}")
         except Exception as e:
