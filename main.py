@@ -29,7 +29,7 @@ from pyrogram import Client, filters
 from pyrogram.types import User, Message
 from pyrogram.enums import ChatMemberStatus
 from pyrogram.raw.functions.channels import GetParticipants
-from config import api_id, api_hash, bot_token
+from config import api_id, api_hash, bot_token, auth_users
 from datetime import datetime
 import time
 from concurrent.futures import ThreadPoolExecutor
@@ -338,8 +338,7 @@ async def pwwp_callback(bot, callback_query):
     user_id = callback_query.from_user.id
     await callback_query.answer()
     
-    auth_user = [][0]
-    user = await bot.get_users(auth_user)
+    user = await bot.get_users(auth_users[0])
     owner_username = "@" + user.username
 
     if user_id not in []:
@@ -771,8 +770,7 @@ async def cpwp_callback(bot, callback_query):
     user_id = callback_query.from_user.id
     await callback_query.answer()
 
-    auth_user = [][0]
-    user = await bot.get_users(auth_user)
+    user = await bot.get_users(auth_users[0])
     owner_username = "@" + user.username
 
     if user_id not in []:
@@ -1397,8 +1395,7 @@ async def appxwp_callback(bot, callback_query):
     user_id = callback_query.from_user.id
     await callback_query.answer()
 
-    auth_user = [][0]
-    user = await bot.get_users(auth_user)
+    user = await bot.get_users(auth_users[0])
     owner_username = "@" + user.username
 
     if user_id not in []:
