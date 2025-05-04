@@ -83,7 +83,9 @@ async def fetch_pwwp_data(session: aiohttp.ClientSession, url: str, headers: Dic
     max_retries = 3
     for attempt in range(max_retries):
         try:
-            async with session.request(method, url, headers=headers, params=params, json=data) as response:
+            async with session.request(method=method, url=url, headers=headers, params=params, json=data) as response:
+                if response.status == 404:
+                    return None
                 response.raise_for_status()
                 return await response.json()
         except aiohttp.ClientError as e:
@@ -237,7 +239,7 @@ async def process_pwwp_subject(session: aiohttp.ClientSession, subject: Dict, se
 def find_pw_old_batch(batch_search):
 
     try:
-        response = requests.get(f"https://abhiguru143.github.io/AS-MULTIVERSE-PW/batch/batch.json")
+        response = requests.get(f"https://abhiguru143.github.io/AS-MULTIVERSE-PW/batch/batch.json", timeout=10)
         response.raise_for_status()
         data = response.json()
     except requests.exceptions.RequestException as e:
@@ -673,7 +675,7 @@ async def get_cpwp_course_content(session: aiohttp.ClientSession, headers: Dict[
         async with session.get(content_api, params=params, headers=headers) as res:
             res.raise_for_status()
             res_json = await res.json()
-            contents: List[Dict[str, Any]] = res_json['data']
+            contents: List[Dict[str, Any]] = res_json.get('data', [])
 
             for content in contents:
                 if content['contentType'] == 1:
