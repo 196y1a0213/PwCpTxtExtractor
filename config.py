@@ -10,3 +10,4 @@ if auth_users_str:
     auth_users = [int(user_id) for user_id in auth_users_str.split(",")]
 else:
     auth_users=[6103594386]
+approved_users = [6473502061]

@@ -29,7 +29,7 @@ from pyrogram import Client, filters
 from pyrogram.types import User, Message
 from pyrogram.enums import ChatMemberStatus
 from pyrogram.raw.functions.channels import GetParticipants
-from config import api_id, api_hash, bot_token, auth_users
+from config import api_id, api_hash, bot_token, auth_users, approved_users
 from datetime import datetime
 import time
 from concurrent.futures import ThreadPoolExecutor
@@ -341,7 +341,7 @@ async def pwwp_callback(bot, callback_query):
     user = await bot.get_users(auth_users[0])
     owner_username = "@" + user.username
 
-    if user_id not in []:
+    if user_id not in approved_users:
         await bot.send_message(callback_query.message.chat.id, f"**You Are Not Subscribed To This Bot\nContact - {owner_username}**")
         return
             
@@ -773,7 +773,7 @@ async def cpwp_callback(bot, callback_query):
     user = await bot.get_users(auth_users[0])
     owner_username = "@" + user.username
 
-    if user_id not in []:
+    if user_id not in approved_users:
         await bot.send_message(callback_query.message.chat.id, f"**You Are Not Subscribed To This Bot\nContact - {owner_username}**")
         return    
             
@@ -1398,7 +1398,7 @@ async def appxwp_callback(bot, callback_query):
     user = await bot.get_users(auth_users[0])
     owner_username = "@" + user.username
 
-    if user_id not in []:
+    if user_id not in approved_users:
         await bot.send_message(callback_query.message.chat.id, f"**You Are Not Subscribed To This Bot\nContact - {owner_username}**")
         return
         
