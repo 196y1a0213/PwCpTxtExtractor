@@ -29,7 +29,7 @@ from pyrogram import Client, filters
 from pyrogram.types import User, Message
 from pyrogram.enums import ChatMemberStatus
 from pyrogram.raw.functions.channels import GetParticipants
-from config import api_id, api_hash, bot_token, []
+from config import api_id, api_hash, bot_token
 from datetime import datetime
 import time
 from concurrent.futures import ThreadPoolExecutor
@@ -63,7 +63,7 @@ async def start(bot, message):
     welcome_text = """✨ Welcome to the Free Learning Bot ✨
 
 🔥 Access premium content without purchase
-🔧 Powered by @ytbr_67 — Give credit 🙏
+🔧 Powered by @jackson — Give credit 🙏
 
 👇 Tap any button below to continue 👇"""
     await message.reply_photo(
